@@ -40,19 +40,30 @@ class CustomSinCurve extends THREE.Curve {
 
 const path = new CustomSinCurve( 10 );
 const geometry = new THREE.TubeGeometry( path, 20, 2, 8, false );
-const material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+const material = new THREE.MeshMatcapMaterial({})
 const mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
 
 camera.position.z = 20;
 camera.position.x = 5;
 
+const textureLoader = new THREE.TextureLoader();
+const matcap = textureLoader.load('./texturas/cafe.jpg')
+material.matcap = matcap;
+material.flatShading = true
+
+
+const edges = new THREE.EdgesGeometry( geometry );
+const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+scene.add( line );
 
 
 
 function animate() {
 	requestAnimationFrame( animate );
 
+	line.rotation.x += 0.01;
+	line.rotation.y += 0.01;
 	mesh.rotation.x += 0.01;
 	mesh.rotation.y += 0.01;
 

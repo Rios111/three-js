@@ -16,12 +16,22 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const geometry = new THREE.TorusGeometry( 12, 3, 16, 100 );
-const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+const material = new THREE.MeshMatcapMaterial({});
 const torus = new THREE.Mesh( geometry, material );
 scene.add( torus );
 
 camera.position.z = 55;
 camera.position.x = 5;
+
+const textureLoader = new THREE.TextureLoader();
+const matcap = textureLoader.load('./texturas/mar.jpg')
+material.matcap = matcap;
+material.flatShading = true
+
+
+const edges = new THREE.EdgesGeometry( geometry );
+const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+scene.add( line );
 
 
 
@@ -29,6 +39,8 @@ camera.position.x = 5;
 function animate() {
 	requestAnimationFrame( animate );
 
+  line.rotation.x += 0.01;
+	line.rotation.y += 0.01;
 	torus.rotation.x += 0.01;
 	torus.rotation.y += 0.01;
 
