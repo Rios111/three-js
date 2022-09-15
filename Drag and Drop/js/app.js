@@ -83,6 +83,16 @@ dControls.addEventListener("hoveroff", function (e) {
 
 });
 
+// flycontrols
+
+    const flycontrols = new THREE.FlyControls( camera, renderer.domElement)
+    flycontrols.movementSpeed = 50
+    flycontrols.rollSpeed = 0.01
+    flycontrols.autoForward = false
+    flycontrols.dragToLock = false
+
+// flycontrols
+
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -96,6 +106,8 @@ function animate() {
     torusKnot3.rotation.y += 0.01;
     /* line.rotation.x += +0.01;
     line.rotation.y += 0.01; */
+
+    flycontrols.update(0.5)
 
 	renderer.render( scene, camera );
 };
